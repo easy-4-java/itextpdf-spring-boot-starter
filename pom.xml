@@ -12,7 +12,7 @@
     <groupId>com.github.vindell</groupId>
     <artifactId>spring-boot-starter-itextpdf</artifactId>
     <description>Spring Boot Starter For Itextpdf</description>
-    <version></version>
+    <version>2.3.x.20260630-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <url>https://github.com/vindell/${project.artifactId}</url>
     <packaging>jar</packaging>

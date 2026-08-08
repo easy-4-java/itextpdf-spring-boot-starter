@@ -30,42 +30,62 @@ import java.io.IOException;
 import java.util.List;
  
 /**
-* by 明明如月 github :https://github.com/chujianyun
-*/
- 
+ * Utility for converting HTML content into PDF documents using iText 7.
+ * <p>
+ * Loads fonts from a bundled {@code /font} resource directory, splits the
+ * HTML into iText elements via {@link HtmlConverter} and renders them onto a
+ * landscape A4 {@link Document}, honouring explicit page breaks.
+ * </p>
+ *
+ * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 1.0.0
+ */
+
 public class Html2PdfUtil {
- 
+
     /**
-     * 字体所在目录
+     * Classpath directory that bundles the {@code .ttf} font files used during
+     * conversion.
      */
     private static final String FONT_RESOURCE_DIR = "/font";
- 
+
     /**
-     * @param htmlContent html文本
-     * @param dest        目的文件路径，如 /xxx/xxx.pdf
-     * @throws IOException IO异常
+     * Converts the supplied HTML fragment into a PDF file written to
+     * {@code dest}.
+     * <p>
+     * Standard PDF fonts are registered together with every font found under
+     * {@link #FONT_RESOURCE_DIR}. The HTML is converted to a list of iText
+     * elements and added to a landscape A4 document, with
+     * {@link HtmlPageBreak} elements treated as explicit page breaks.
+     * </p>
+     *
+     * @param htmlContent the HTML fragment to convert
+     * @param dest        absolute output file path, e.g. {@code /xxx/xxx.pdf}
+     * @throws IOException if the font directory or output file cannot be read
+     *                     or written
      */
     public static void createPdf(String htmlContent, String dest) throws IOException {
         ConverterProperties props = new ConverterProperties();
-        // props.setCharset("UFT-8"); 编码
+        // props.setCharset("UFT-8"); encoding
         FontProvider fp = new FontProvider();
         fp.addStandardPdfFonts();
-        // .ttf 字体所在目录
+        // Directory containing the .ttf fonts
         String resources = Html2PdfUtil.class.getResource(FONT_RESOURCE_DIR).getPath();
         fp.addDirectory(resources);
         props.setFontProvider(fp);
-        // html中使用的图片等资源目录（图片也可以直接用url或者base64格式而不放到资源里）
-        // props.setBaseUri(resources); 
- 
+        // Base URI for images and other resources referenced by the HTML
+        // (images may also be referenced by URL or as base64 instead)
+        // props.setBaseUri(resources);
+
         List<IElement> elements = HtmlConverter.convertToElements(htmlContent, props);
         PdfDocument pdf = new PdfDocument(new PdfWriter(dest));
         Document document = new Document(pdf, PageSize.A4.rotate(), false);
         for (IElement element : elements) {
-            // 分页符
+            // Page break
             if (element instanceof HtmlPageBreak) {
                 document.add((HtmlPageBreak) element);
- 
-            //普通块级元素
+
+            // Regular block-level element
             } else {
                 document.add((IBlockElement) element);
             }
@@ -73,6 +93,3 @@ public class Html2PdfUtil {
         document.close();
     }
 }
-————————————————
-版权声明：本文为CSDN博主「明明如月小角落」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/w605283073/article/details/83352856

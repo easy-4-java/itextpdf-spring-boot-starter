@@ -18,11 +18,25 @@ package com.itextpdf.spring.boot;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 
+/**
+ * Configuration properties for the iText HTML-to-PDF integration, bound to the
+ * {@value #PREFIX} namespace.
+ * <p>
+ * Controls which font families are registered with the default
+ * {@link com.itextpdf.layout.font.FontProvider} used during conversion.
+ * </p>
+ *
+ * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 1.0.0
+ */
 @ConfigurationProperties(Html2pdfProperties.PREFIX)
 public class Html2pdfProperties {
 
+	/**
+	 * Property prefix under which HTML-to-PDF options live.
+	 */
 	public static final String PREFIX = "spring.itext.html2pdf";
- 
+
 	/**
 	 * use true if you want to register the standard Type 1 fonts (can't be embedded)
 	 */

@@ -47,7 +47,11 @@ class Html2pdfAutoConfigurationTest {
     void testLoadsWhenEnabledPropertySet() {
         runner.withUserConfiguration(Html2pdfAutoConfiguration.class)
                 .withPropertyValues("spring.itext.html2pdf.enabled=true")
-                .run(context -> assertThat(context).hasSingleBean(Html2pdfAutoConfiguration.class));
+                .run(context -> {
+                    assertThat(context).hasSingleBean(Html2pdfAutoConfiguration.class);
+                    Html2pdfAutoConfiguration config = context.getBean(Html2pdfAutoConfiguration.class);
+                    assertThat(config.getApplicationContext()).isNotNull();
+                });
     }
 
     @Test

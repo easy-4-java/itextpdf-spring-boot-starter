@@ -9,8 +9,8 @@
         <relativePath /> 
     </parent>
     
-    <groupId>com.github.vindell</groupId>
-    <artifactId>spring-boot-starter-itextpdf</artifactId>
+    <groupId>io.github.easy4j</groupId>
+    <artifactId>itextpdf-spring-boot-starter</artifactId>
     <description>Spring Boot Starter For Itextpdf</description>
     <version>3.0.x.20260630-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>

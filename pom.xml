@@ -11,8 +11,8 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.github.vindell</groupId>
-    <artifactId>spring-boot-starter-itextpdf</artifactId>
+    <groupId>io.github.easy4j</groupId>
+    <artifactId>itextpdf-spring-boot-starter</artifactId>
     <version>4.1.x.20260630-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>

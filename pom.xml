@@ -10,7 +10,7 @@
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.github.easy4j</groupId>
+    <groupId>io.github.easy4j</groupId>
     <artifactId>itextpdf-spring-boot-starter</artifactId>
     <description>Spring Boot Starter For Itextpdf</description>
     <version>1.0.0-SNAPSHOT</version>

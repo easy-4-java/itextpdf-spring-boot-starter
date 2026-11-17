@@ -27,7 +27,9 @@ import com.itextpdf.layout.element.IElement;
 import com.itextpdf.layout.font.FontProvider;
  
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.Objects;
  
 /**
 * by 明明如月 github :https://github.com/chujianyun
@@ -51,8 +53,10 @@ public class Html2PdfUtil {
         FontProvider fp = new FontProvider();
         fp.addStandardPdfFonts();
         // .ttf 字体所在目录
-        String resources = Html2PdfUtil.class.getResource(FONT_RESOURCE_DIR).getPath();
-        fp.addDirectory(resources);
+        URL fontDirectory = Html2PdfUtil.class.getResource(FONT_RESOURCE_DIR);
+        if (Objects.nonNull(fontDirectory)) {
+            fp.addDirectory(fontDirectory.getPath());
+        }
         props.setFontProvider(fp);
         // html中使用的图片等资源目录（图片也可以直接用url或者base64格式而不放到资源里）
         // props.setBaseUri(resources); 

@@ -17,6 +17,10 @@ package com.jeefw.cloud.htmltox;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,10 +33,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("Html2PdfUtil Tests")
 class Html2PdfUtilTest {
 
+    @TempDir
+    Path tempDir;
+
     @Test
     @DisplayName("Instance can be created via constructor")
     void testInstantiation() {
         Html2PdfUtil instance = new Html2PdfUtil();
         assertThat(instance).isNotNull();
+    }
+
+    @Test
+    @DisplayName("Creates a PDF when no bundled font directory exists")
+    void createsPdfWithoutBundledFonts() throws Exception {
+        Path output = tempDir.resolve("sample.pdf");
+        Html2PdfUtil.createPdf("<p>Hello PDF</p>", output.toString());
+        assertThat(Files.readAllBytes(output)).startsWith("%PDF".getBytes("US-ASCII"));
+        assertThat(Files.size(output)).isGreaterThan(100);
     }
 }

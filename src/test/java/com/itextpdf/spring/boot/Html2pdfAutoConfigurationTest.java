@@ -18,6 +18,8 @@ package com.itextpdf.spring.boot;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
+import com.itextpdf.html2pdf.ConverterProperties;
+import com.itextpdf.layout.font.FontProvider;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,7 +49,13 @@ class Html2pdfAutoConfigurationTest {
     void testLoadsWhenEnabledPropertySet() {
         runner.withUserConfiguration(Html2pdfAutoConfiguration.class)
                 .withPropertyValues("spring.itext.html2pdf.enabled=true")
-                .run(context -> assertThat(context).hasSingleBean(Html2pdfAutoConfiguration.class));
+                .run(context -> {
+                    assertThat(context).hasSingleBean(Html2pdfAutoConfiguration.class);
+                    assertThat(context).hasSingleBean(FontProvider.class);
+                    assertThat(context).hasSingleBean(ConverterProperties.class);
+                    assertThat(context.getBean(Html2pdfAutoConfiguration.class).getApplicationContext())
+                            .isSameAs(context.getSourceApplicationContext());
+                });
     }
 
     @Test
